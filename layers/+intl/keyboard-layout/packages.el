@@ -153,24 +153,25 @@
     (evil-define-key 'evilified elfeed-search-mode-map
       "k" 'elfeed-search-live-filter)))
 
-(defun keyboard-layout/pre-init-evil ()
+(defun keyboard-layout/post-init-evil ()
   (kl|config evil
     :description
     "Remap `evil' bindings."
-    :loader
-    (with-eval-after-load 'evil BODY)
+    ;; :loader
+    ;; (with-eval-after-load 'evil BODY)
     :common
-    (dolist (map kl--all-evil-states-but-insert)
-      (kl/correct-keys map
-        "h"
-        "j"
-        "k"
-        "l"
-        ;;
-        "H"
-        "J"
-        "K"
-        "L"))
+    (progn
+      (with-eval-after-load 'dired
+        (run-at-time "1 sec" nil #'(lambda ()
+          (dolist (map kl--all-evil-states-but-insert)
+            (kl/correct-keys map
+              "d" "f" "k" "j" "u" "r" "l" ";" "e" "t" "g" "y" "n" "i" "o" "h" "v" "p" "D" "F" "K" "J" "U" "R" "L" ":" "A" "S" "E" "T" "Y" "N" "I" "O" "H" "B" "P"
+              )
+            )
+          (kl/evil-correct-keys 'normal dired-mode-map
+            "d" "f" "k" "j" "u" "r" "l" ";" "e" "t" "g" "y" "n" "i" "o" "h" "v" "p" "D" "F" "K" "J" "U" "R" "L" ":" "A" "S" "E" "T" "Y" "N" "I" "O" "H" "B" "P"
+            )
+          ))))
     :bepo
     (progn
       (kl/set-in-all-evil-states-but-insert
@@ -225,14 +226,14 @@
 ;; only I've found to make them stick.  An unfortunate consequence of using
 ;; `kl|config evil' twice is that user hooks for this configuration will be run
 ;; twice as well.
-(defun keyboard-layout/post-init-evil ()
-  (kl|config evil
-    :description
-    "Remap `evil' bindings."
-    :colemak-jkhl
-    (progn
-      (define-key evil-normal-state-map "K" nil)
-      (define-key evil-normal-state-map "L" 'spacemacs/evil-smart-doc-lookup))))
+;; (defun keyboard-layout/post-init-evil ()
+;;   (kl|config evil
+;;     :description
+;;     "Remap `evil' bindings."
+;;     :colemak-jkhl
+;;     (progn
+;;       (define-key evil-normal-state-map "K" nil)
+;;       (define-key evil-normal-state-map "L" 'spacemacs/evil-smart-doc-lookup))))
 
 (defun keyboard-layout/pre-init-evil-cleverparens ()
   (kl|config evil-cleverparens
@@ -267,10 +268,8 @@
     (with-eval-after-load 'evil-evilified-state BODY)
     :common
     (kl/correct-keys evil-evilified-state-map
-      "h"
-      "j"
-      "k"
-      "l")))
+      "d" "f" "k" "j" "u" "r" "l" ";" "e" "t" "g" "y" "n" "i" "o" "h" "v" "p" "D" "F" "K" "J" "U" "R" "L" ":" "A" "S" "E" "T" "Y" "N" "I" "O" "H" "B" "P"
+      )))
 
 (defun keyboard-layout/pre-init-evil-lisp-state ()
   (kl|config evil-lisp-state
@@ -301,10 +300,8 @@
                        (list evil-collection-magit-state 'visual)
                      (list evil-collection-magit-state)))
       (kl/evil-correct-keys state magit-mode-map
-        "j"
-        "k"
-        "C-j"
-        "C-k"))
+        "d" "f" "k" "j" "u" "r" "l" ";" "e" "t" "g" "y" "n" "i" "o" "h" "v" "p" "D" "F" "K" "J" "U" "R" "L" ":" "A" "S" "E" "T" "Y" "N" "I" "O" "H" "B" "P"
+        ))
     (kl/evil-correct-keys 'normal evil-collection-magit-toggle-text-minor-mode-map
       "C-j")))
 
@@ -450,10 +447,8 @@
                        magit-stashes-section-map
                        magit-tag-section-map))
       (kl/correct-keys map
-        "j"
-        "k"
-        "C-j"
-        "C-k"))
+        "d" "f" "k" "j" "u" "r" "l" ";" "e" "t" "g" "y" "n" "i" "o" "h" "v" "p" "D" "F" "K" "J" "U" "R" "L" ":" "A" "S" "E" "T" "Y" "N" "I" "O" "H" "B" "P"
+        ))
     :bepo
     (progn
       (transient-suffix-put 'magit-dispatch "t" :key "j")
